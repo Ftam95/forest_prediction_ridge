@@ -20,16 +20,16 @@ app = FastAPI()
 
 # Define the request schema
 class PredictionRequest(BaseModel):
-    Temperature: float
-    RH: float
-    Ws: float
+    Temperature: int
+    RH: int
+    Ws: int
     Rain: float
     FFMC: float
     DMC: float
-    DC: float
     ISI: float
-    BUI: float
-    Classes: float
+    Classes: int
+    Region: int
+    
 
 # Root endpoint
 @app.get("/")
@@ -43,7 +43,7 @@ def predict(input_data: PredictionRequest):
         # Extract features from the request
         features = np.array([[input_data.Temperature, input_data.RH, input_data.Ws, 
                                input_data.Rain, input_data.FFMC, input_data.DMC, 
-                               input_data.DC, input_data.ISI, input_data.BUI]])
+                              input_data.ISI, input_data.Classes, input_data.Region]])
         
         # Scale the features
         scaled_features = scaler.transform(features)
